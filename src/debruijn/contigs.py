@@ -53,7 +53,7 @@ def extract_contigs(g: DeBruijnGraph) -> List[str]:
                 cur = nxt
             contigs.append(path_to_sequence(path))
 
-    # Isolated cycles with no branching nodes — walk from any remaining node.
+    # Isolated cycles with no branching nodes -- walk from any remaining node.
     for u in list(g.nodes()):
         for v in list(g.out_edges.get(u, {}).keys()):
             if (u, v) in visited_edges:

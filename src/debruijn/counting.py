@@ -25,7 +25,7 @@ def count_kmers(reads: Iterable[str], k: int, canonicalize: bool = True) -> Coun
 
 def kmer_histogram(counts: Counter, max_count: int = 100) -> np.ndarray:
     """Histogram of how many distinct k-mers occur exactly 1, 2, ..., max_count times.
-    Useful for choosing a coverage cutoff — the first valley between the error peak
+    Useful for choosing a coverage cutoff -- the first valley between the error peak
     near 1 and the genomic peak near mean_coverage is the natural threshold."""
     h = np.zeros(max_count + 1, dtype=int)
     for cnt in counts.values():
@@ -36,7 +36,7 @@ def kmer_histogram(counts: Counter, max_count: int = 100) -> np.ndarray:
 class CountMinSketch:
     """Approximate k-mer counter using a small count-min sketch. Gives a
     probabilistic over estimate of any given k-mer's count in sub-linear
-    space — useful when the distinct k-mer set is too large for a dict."""
+    space -- useful when the distinct k-mer set is too large for a dict."""
 
     def __init__(self, width: int = 1 << 20, depth: int = 4, seed: int = 0):
         self.width = width

@@ -1,32 +1,32 @@
-# Project Plan — De Bruijn Graph Genome Assembly
+# Project Plan -- De Bruijn Graph Genome Assembly
 
 ## Goal
 Build a from scratch library (`debruijn`) that implements a minimal but correct Velvet style short read genome assembler. The library covers k-mer counting, de Bruijn graph construction, tip removal, bubble popping, Hierholzer's Eulerian path algorithm, and maximal non branching path extraction for contig output. Validate on simulated reads from the lambda phage genome and benchmark against SPAdes on a small bacterial or phage dataset.
 
 ## Layers
 
-### Layer 0 — Foundations
+### Layer 0 -- Foundations
 Read and write FASTA and FASTQ. Encode DNA as integer arrays. Handle reverse complements so that both strands contribute to the graph.
 
-### Layer 1 — K-mer operations
+### Layer 1 -- K-mer operations
 Canonical k-mer encoding (lexicographically smaller of k-mer and its reverse complement). Exact k-mer counting via a Python dict with numpy bucketing. Approximate k-mer counting via count min sketch for memory constrained settings.
 
-### Layer 2 — De Bruijn graph
+### Layer 2 -- De Bruijn graph
 Node set indexed by distinct (k-1)-mers. Edge set indexed by distinct k-mers. Edge weights = observed read coverage. Expose adjacency structure with in degree and out degree lookups and a neighbors iterator.
 
-### Layer 3 — Graph cleanup
+### Layer 3 -- Graph cleanup
 Tip removal: iteratively prune paths of length less than 2k that end at a degree 1 node. Bubble popping: identify pairs of parallel paths between two shared nodes; keep the higher coverage path and remove the other. Low coverage edge removal: delete edges with coverage below a threshold proportional to the mean.
 
-### Layer 4 — Eulerian traversal
+### Layer 4 -- Eulerian traversal
 Hierholzer's algorithm in linear time for finding an Eulerian circuit or path. Handles the case where the graph is a disjoint union of connected components by returning a set of circuits.
 
-### Layer 5 — Contig extraction
+### Layer 5 -- Contig extraction
 Maximal non branching path collapse: any internal node with in degree and out degree both equal to 1 is merged with its successor. The resulting edges are contigs. Output as FASTA. Compute N50, total assembly length, number of contigs.
 
-### Layer 6 — Visualization
+### Layer 6 -- Visualization
 Plot the simplified graph (nodes and edges) using matplotlib and networkx. Plot the k-mer coverage histogram (used to set the coverage cutoff). Plot N50 as a function of k to help choose the right k.
 
-### Layer 7 — External comparison
+### Layer 7 -- External comparison
 Optional bridge to SPAdes via subprocess. Run SPAdes on the same read set and compare the N50 and fraction of reference genome recovered side by side with our assembler.
 
 ## Data

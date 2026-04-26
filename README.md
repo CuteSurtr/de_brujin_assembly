@@ -2,6 +2,10 @@
 
 A from scratch library of de Bruijn graph genome assembly algorithms. The library builds the full pipeline from k-mer counting through graph construction, error correction by tip removal and low coverage edge filtering, Hierholzer Eulerian path reconstruction, and maximal non branching path contig extraction with N50 reporting. Every algorithm is validated against brute force construction on small sequences and against a full end to end assembly of the 48502 bp lambda phage reference genome at various coverage depths, k values, and error rates.
 
+**Tests:** 15 passing in <1 s. **License:** MIT.
+
+![debruijn demo](results/debruijn_demo.png)
+
 ## Foundations
 
 The assembly problem takes millions of short overlapping reads from shotgun sequencing and reconstructs the original genome. Two algorithmic paradigms compete. The overlap layout consensus approach treats each read as a node and each pairwise overlap as an edge, reducing assembly to Hamiltonian path which is NP hard in general and intractable at short read volumes. The de Bruijn graph approach, introduced for assembly by Idury and Waterman 1995 and crystallized in Pevzner Tang and Waterman 2001, treats each k-mer as an edge from its k minus one prefix to its k minus one suffix, reducing assembly to Eulerian path which Hierholzer 1873 solves in linear time. Compeau Pevzner and Tesler 2011 put it bluntly in their Nature Biotechnology primer: the computational problem of fragment assembly with a million reads is easier to solve than the sequencing by hybridization problem with a few thousand probes. Every modern short read assembler from Velvet 2008 through SPAdes 2012 to current long read extensions uses a de Bruijn graph at its core.

@@ -88,7 +88,7 @@ def main() -> None:
     print(f"  effective coverage = {sum(len(r) for r in reads) / len(reference):.1f}x")
 
     contigs, stats = assemble(reads, k=31, min_coverage=2)
-    print(f"  k=31, min_cov=2 → {stats['n_contigs']:,} contigs, "
+    print(f"  k=31, min_cov=2 -> {stats['n_contigs']:,} contigs, "
           f"total {stats['total_length']:,} bp, "
           f"N50 = {stats['n50']:,} bp, longest = {stats['longest']:,} bp")
     print(f"  recovered = {stats['total_length'] / len(reference) * 100:.1f}% of reference")
@@ -151,7 +151,7 @@ def main() -> None:
     for c in range(1, 21):
         bar = "#" * int(int(hist[c]) / max(h_max, 1) * 40)
         print(f"    cov={c:>3}: {int(hist[c]):>8,}  {bar}")
-    print("  (the peak near expected coverage ≈ 30 represents genuine k-mers;")
+    print("  (the peak near expected coverage ~ 30 represents genuine k-mers;")
     print("   the tall spike at cov=1 is sequencing error k-mers.)")
 
     # ---- 6. Eulerian reconstruction on small substring --------------------
@@ -177,11 +177,11 @@ def main() -> None:
               f"shared: {len(shared):,}")
         print(f"  reference k-mer recovery: {len(shared) / len(ref_kmers) * 100:.1f}%")
     else:
-        print("  (no Eulerian path — fell back to contig extraction)")
+        print("  (no Eulerian path -- fell back to contig extraction)")
 
     # ---- 7. figures -------------------------------------------------------
     if HAVE_MPL:
-        section("7. Figures → results/")
+        section("7. Figures -> results/")
         fig, axs = plt.subplots(2, 2, figsize=(13, 9))
 
         # (a) N50 vs k
@@ -192,7 +192,7 @@ def main() -> None:
         axs[0][0].plot(ks, longests, "s--", label="longest contig", color="#ff7f0e")
         axs[0][0].set_xlabel("k")
         axs[0][0].set_ylabel("bp")
-        axs[0][0].set_title("Contig quality vs. k (30× error-free)")
+        axs[0][0].set_title("Contig quality vs. k (30x error-free)")
         axs[0][0].legend()
         axs[0][0].grid(True, alpha=0.3)
 
@@ -202,7 +202,7 @@ def main() -> None:
         c_long = [s["longest"] for _, s in cov_sweep_results]
         axs[0][1].plot(covs, c_n50s, "o-", label="N50", color="#2ca02c")
         axs[0][1].plot(covs, c_long, "s--", label="longest", color="#d62728")
-        axs[0][1].set_xlabel("coverage (×)")
+        axs[0][1].set_xlabel("coverage (x)")
         axs[0][1].set_ylabel("bp")
         axs[0][1].set_title("Contig quality vs. coverage (k=31)")
         axs[0][1].legend()
@@ -214,7 +214,7 @@ def main() -> None:
         axs[1][0].plot(errs, ns, "o-", color="#9467bd")
         axs[1][0].set_xlabel("sequencing error rate (%)")
         axs[1][0].set_ylabel("number of contigs")
-        axs[1][0].set_title("Fragmentation vs. error rate (k=31, 30×)")
+        axs[1][0].set_title("Fragmentation vs. error rate (k=31, 30x)")
         axs[1][0].grid(True, alpha=0.3)
 
         # (d) k-mer spectrum
@@ -224,7 +224,7 @@ def main() -> None:
         axs[1][1].set_yscale("log")
         axs[1][1].set_xlabel("k-mer coverage")
         axs[1][1].set_ylabel("number of distinct k-mers (log scale)")
-        axs[1][1].set_title("k-mer spectrum (k=21, 30× with 0.5% error)")
+        axs[1][1].set_title("k-mer spectrum (k=21, 30x with 0.5% error)")
         axs[1][1].grid(True, alpha=0.3, which="both")
 
         fig.tight_layout()
